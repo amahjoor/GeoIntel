@@ -15,6 +15,15 @@ export const ThreatAnalysisCard = ({ data }: Props) => {
     }
   };
 
+  const getSuccessLevelColor = (level: string) => {
+    switch (level.toLowerCase()) {
+      case 'successful': return 'bg-green-100 text-green-900';
+      case 'partial': return 'bg-yellow-100 text-yellow-900';
+      case 'failed': return 'bg-red-100 text-red-900';
+      default: return 'bg-gray-100 text-gray-900';
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <h2 className="text-2xl font-bold mb-6">Threat Analysis</h2>
@@ -134,11 +143,7 @@ export const ThreatAnalysisCard = ({ data }: Props) => {
                   <div className="text-black">{incident.date}</div>
                   <div className="font-semibold">{incident.type}</div>
                 </div>
-                <span className={`px-3 py-1 rounded text-sm ${
-                  incident.success_level === 'Successful' ? 'bg-red-100 text-red-800' :
-                  incident.success_level === 'Partial' ? 'bg-yellow-100 text-yellow-800' :
-                  'bg-green-100 text-green-800'
-                }`}>
+                <span className={`px-3 py-1 rounded ${getSuccessLevelColor(incident.success_level)}`}>
                   {incident.success_level}
                 </span>
               </div>
