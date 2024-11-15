@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { analyzeCountry } from '@/services/api';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { AnalysisCard } from '@/components/AnalysisCard';
+import { CountrySelector } from '@/components/CountrySelector';
 
 type AnalysisTab = 'sentiment' | 'figures' | 'threats';
 
@@ -15,7 +16,6 @@ export default function Home() {
 
   const handleAnalyze = async () => {
     if (!country.trim()) {
-      setError('Please enter a country name');
       return;
     }
 
@@ -67,13 +67,10 @@ export default function Home() {
           
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
             <div className="flex gap-4">
-              <input
-                type="text"
+              <CountrySelector
                 value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Enter country name..."
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={setCountry}
+                onSelect={handleAnalyze}
                 disabled={loading}
               />
               <button
