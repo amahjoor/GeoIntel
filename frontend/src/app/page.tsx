@@ -1,8 +1,10 @@
 'use client';
+import styles from './page.module.css';
 import { useState } from 'react';
 import { analyzeCountry } from '@/services/api';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { AnalysisCard } from '@/components/AnalysisCard';
+import { WorldMap } from '@/components/WorldMap';
 
 type AnalysisTab = 'sentiment' | 'figures' | 'threats';
 
@@ -58,14 +60,23 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
+    <div className={styles.container}>
+      <main className="min-h-screen">
+        <div className={styles.content}>
+          <h1 className="text-4xl font-bold text-gray-900 mb-12 text-center">
             Global Intelligence Analysis
           </h1>
           
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <div className="mb-8 rounded-lg overflow-hidden shadow-lg">
+            <WorldMap 
+              onSelectCountry={(selectedCountry) => {
+                setCountry(selectedCountry);
+                handleAnalyze();
+              }} 
+            />
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
             <div className="flex gap-4">
               <input
                 type="text"
@@ -73,19 +84,19 @@ export default function Home() {
                 onChange={(e) => setCountry(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Enter country name..."
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 disabled={loading}
               />
               <button
                 onClick={handleAnalyze}
                 disabled={loading}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
+                className="px-8 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
               >
                 {loading ? 'Analyzing...' : 'Analyze'}
               </button>
             </div>
             {error && (
-              <p className="mt-2 text-red-500 text-sm">{error}</p>
+              <p className="mt-3 text-red-500 text-sm">{error}</p>
             )}
           </div>
 
