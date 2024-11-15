@@ -7,11 +7,11 @@ interface Props {
 export const ThreatAnalysisCard = ({ data }: Props) => {
   const getThreatLevelColor = (level: string) => {
     switch (level.toLowerCase()) {
-      case 'critical': return 'bg-red-100 text-red-800';
-      case 'high': return 'bg-orange-100 text-orange-800';
-      case 'medium': return 'bg-yellow-100 text-yellow-800';
-      case 'low': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'critical': return 'bg-red-100 text-red-900';
+      case 'high': return 'bg-orange-100 text-orange-900';
+      case 'medium': return 'bg-yellow-100 text-yellow-900';
+      case 'low': return 'bg-green-100 text-green-900';
+      default: return 'bg-gray-100 text-gray-900';
     }
   };
 
@@ -29,8 +29,8 @@ export const ThreatAnalysisCard = ({ data }: Props) => {
                 <div>
                   <h4 className="font-semibold text-lg">{actor.name}</h4>
                   <div className="flex gap-2 mt-1">
-                    <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">{actor.type}</span>
-                    <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded text-sm">{actor.classification}</span>
+                    <span className="bg-gray-200 text-black px-2 py-1 rounded text-sm">{actor.type}</span>
+                    <span className="bg-gray-200 text-black px-2 py-1 rounded text-sm">{actor.classification}</span>
                   </div>
                 </div>
                 <span className={`px-3 py-1 rounded ${getThreatLevelColor(actor.threat_level)}`}>
@@ -62,15 +62,15 @@ export const ThreatAnalysisCard = ({ data }: Props) => {
                 <div className="space-y-3">
                   {actor.known_activities.map((activity, idx) => (
                     <div key={idx} className="border-l-4 border-red-500 pl-3 py-2">
-                      <div className="text-sm text-gray-600">{activity.date}</div>
+                      <div className="text-sm text-black">{activity.date}</div>
                       <div className="font-medium">{activity.activity}</div>
                       <div className="text-sm mt-1">
                         <span className="font-medium">Target:</span> {activity.target}
                       </div>
-                      <div className="text-sm text-gray-700">{activity.impact}</div>
+                      <div className="text-sm text-black">{activity.impact}</div>
                       <div className="flex flex-wrap gap-1 mt-2">
                         {activity.methods_used.map((method, methodIdx) => (
-                          <span key={methodIdx} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                          <span key={methodIdx} className="bg-gray-100 text-black px-2 py-1 rounded-full text-xs">
                             {method}
                           </span>
                         ))}
@@ -96,9 +96,9 @@ export const ThreatAnalysisCard = ({ data }: Props) => {
                   {threat.severity}
                 </span>
                 <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">{threat.likelihood}</span>
-                <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm">{threat.timeframe}</span>
+                <span className="bg-gray-100 text-black px-2 py-1 rounded text-sm">{threat.timeframe}</span>
               </div>
-              <p className="text-gray-800 mb-3">{threat.description}</p>
+              <p className="text-black mb-3">{threat.description}</p>
               
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
@@ -131,7 +131,7 @@ export const ThreatAnalysisCard = ({ data }: Props) => {
             <div key={index} className="border rounded-lg p-4">
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <div className="text-gray-600">{incident.date}</div>
+                  <div className="text-black">{incident.date}</div>
                   <div className="font-semibold">{incident.type}</div>
                 </div>
                 <span className={`px-3 py-1 rounded text-sm ${
@@ -143,7 +143,7 @@ export const ThreatAnalysisCard = ({ data }: Props) => {
                 </span>
               </div>
               
-              <p className="text-gray-800 mb-3">{incident.description}</p>
+              <p className="text-black mb-3">{incident.description}</p>
               
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
@@ -159,7 +159,7 @@ export const ThreatAnalysisCard = ({ data }: Props) => {
                       <span className="font-medium">Affected Sectors:</span>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {incident.impact.affected_sectors.map((sector: string, idx: number) => (
-                          <span key={idx} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                          <span key={idx} className="bg-gray-100 text-black px-2 py-1 rounded-full text-xs">
                             {sector}
                           </span>
                         ))}
@@ -231,12 +231,12 @@ export const ThreatAnalysisCard = ({ data }: Props) => {
                     <span className={`px-2 py-1 rounded text-sm ${getThreatLevelColor(rec.priority)}`}>
                       {rec.priority}
                     </span>
-                    <span className="text-sm text-gray-600">{rec.timeframe}</span>
+                    <span className="text-sm text-black">{rec.timeframe}</span>
                   </div>
                   <div className="font-medium">{rec.action}</div>
                   <div className="flex flex-wrap gap-1 mt-2">
                     {rec.resources_required.map((resource, idx) => (
-                      <span key={idx} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                      <span key={idx} className="bg-gray-100 text-black px-2 py-1 rounded-full text-xs">
                         {resource}
                       </span>
                     ))}

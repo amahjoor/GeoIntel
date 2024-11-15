@@ -36,7 +36,7 @@ export const SentimentAnalysisCard = ({ data }: Props) => {
 
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-2">Analysis</h3>
-        <p className="text-gray-700">{data.analysis}</p>
+        <p className="text-black">{data.analysis}</p>
       </div>
 
       <div className="mb-6">
@@ -46,7 +46,7 @@ export const SentimentAnalysisCard = ({ data }: Props) => {
             <div key={index} className="border-l-4 border-blue-500 pl-4">
               <div className="font-semibold">{event.date}</div>
               <div>{event.event}</div>
-              <div className="text-gray-600 text-sm">{event.impact}</div>
+              <div className="text-black text-sm">{event.impact}</div>
             </div>
           ))}
         </div>
@@ -65,7 +65,7 @@ export const SentimentAnalysisCard = ({ data }: Props) => {
               >
                 {source.description}
               </a>
-              <div className="text-gray-500">{source.date}</div>
+              <div className="text-black">{source.date}</div>
             </div>
           ))}
         </div>
