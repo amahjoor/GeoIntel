@@ -6,7 +6,7 @@ import json
 home_country = "United States"
 
 def format_question(country,home_country):
-    return f"""Analyze the current sentiment of {country} towards the {home_country}. 
+    return f"""Analyze the current sentiment of {country} towards the {home_country} from -1 (most negative) to 1 (most positive). 
     Please provide a detailed analysis with 6 specific sources giving URLS (news articles, polls, or diplomatic statements) 
     from the last year. Format the response as a json with this exact structure:
     

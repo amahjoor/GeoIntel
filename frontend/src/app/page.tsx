@@ -4,11 +4,14 @@ import { analyzeCountry } from '@/services/api';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { AnalysisCard } from '@/components/AnalysisCard';
 
+type AnalysisTab = 'sentiment' | 'figures' | 'threats';
+
 export default function Home() {
   const [country, setCountry] = useState('');
   const [analysis, setAnalysis] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [activeTab, setActiveTab] = useState<AnalysisTab>('sentiment');
 
   const handleAnalyze = async () => {
     if (!country.trim()) {
@@ -32,6 +35,25 @@ export default function Home() {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleAnalyze();
+    }
+  };
+
+  const tabs = [
+    { id: 'sentiment', label: 'Sentiment Analysis' },
+    { id: 'figures', label: 'Key Figures & Events' },
+    { id: 'threats', label: 'Threat Analysis' },
+  ];
+
+  const renderAnalysisContent = () => {
+    if (!analysis) return null;
+    
+    switch (activeTab) {
+      case 'sentiment':
+        return <AnalysisCard title="Sentiment Analysis" data={analysis.sentiment} />;
+      case 'figures':
+        return <AnalysisCard title="Key Figures & Events" data={analysis.figures_events} />;
+      case 'threats':
+        return <AnalysisCard title="Threat Analysis" data={analysis.threats} />;
     }
   };
 
@@ -77,11 +99,24 @@ export default function Home() {
           )}
 
           {analysis && !loading && (
-            <div className="grid grid-cols-1 gap-8">
-              <AnalysisCard title="Sentiment Analysis" data={analysis.sentiment} />
-              <AnalysisCard title="Key Figures & Events" data={analysis.figures_events} />
-              <AnalysisCard title="Threat Analysis" data={analysis.threats} />
-            </div>
+            <>
+              <div className="flex border-b border-gray-200 mb-8">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id as AnalysisTab)}
+                    className={`py-4 px-6 text-sm font-medium ${
+                      activeTab === tab.id
+                        ? 'border-b-2 border-blue-500 text-blue-600'
+                        : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+              {renderAnalysisContent()}
+            </>
           )}
         </div>
       </main>
