@@ -1,4 +1,4 @@
-interface SentimentAnalysis {
+export interface SentimentAnalysis {
     overall_sentiment: "Positive" | "Neutral" | "Negative";
     sentiment_score: number;
     key_factors: string[];
@@ -15,7 +15,7 @@ interface SentimentAnalysis {
     }>;
 }
 
-interface FiguresAndEvents {
+export interface FiguresAndEvents {
     political_figures: Array<{
         name: string;
         position: string;
@@ -36,7 +36,7 @@ interface FiguresAndEvents {
     }>;
 }
 
-interface ThreatAnalysis {
+export interface ThreatAnalysis {
     threat_actors: Array<{
         name: string;
         type: string;
@@ -52,7 +52,54 @@ interface ThreatAnalysis {
             methods_used: string[];
         }>;
     }>;
-    // ... add other threat analysis interfaces as needed
+    active_threats: Array<{
+        type: string;
+        description: string;
+        category: string;
+        severity: string;
+        likelihood: string;
+        timeframe: string;
+        exploitation_likelihood: string;
+        affected_systems: string[];
+        potential_impacts: string[];
+        mitigation_status: string;
+        indicators: string[];
+        recommended_actions: Array<{
+            action: string;
+            priority: string;
+            resource_requirement: string;
+            estimated_timeline: string;
+        }>;
+    }>;
+    historical_incidents: Array<{
+        date: string;
+        type: string;
+        description: string;
+        actors_involved: string[];
+        target: string;
+        success_level: string;
+        impact: {
+            immediate: string;
+            long_term: string;
+            affected_sectors: string[];
+        };
+        response: {
+            measures_taken: string[];
+            effectiveness: string;
+        };
+        lessons_learned: string[];
+    }>;
+    risk_assessment: {
+        overall_threat_level: string;
+        trend: string;
+        key_concerns: string[];
+        recommendations: Array<{
+            priority: string;
+            action: string;
+            timeframe: string;
+            resources_required: string[];
+        }>;
+    };
 }
 
 interface AnalysisResponse {
