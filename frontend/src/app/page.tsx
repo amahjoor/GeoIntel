@@ -3,6 +3,10 @@ import { useState } from 'react';
 import { analyzeCountry } from '@/services/api';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { AnalysisCard } from '@/components/AnalysisCard';
+import { WorldMap } from '@/components/WorldMap';
+import { SentimentAnalysisCard } from '@/components/SentimentAnalysis';
+import { FiguresEventsCard } from '@/components/FiguresEvents';
+import { ThreatAnalysisCard } from '@/components/ThreatAnalysis';
 
 type AnalysisTab = 'sentiment' | 'figures' | 'threats';
 
@@ -49,23 +53,34 @@ export default function Home() {
     
     switch (activeTab) {
       case 'sentiment':
-        return <AnalysisCard title="Sentiment Analysis" data={analysis.sentiment} />;
+        return <SentimentAnalysisCard data={analysis.sentiment} />;
       case 'figures':
-        return <AnalysisCard title="Key Figures & Events" data={analysis.figures_events} />;
+        return <FiguresEventsCard data={analysis.figures_events} />;
       case 'threats':
-        return <AnalysisCard title="Threat Analysis" data={analysis.threats} />;
+        return <ThreatAnalysisCard data={analysis.threats} />;
+      default:
+        return null;
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <h1 className="text-4xl font-bold text-gray-900 text-center">
             Global Intelligence Analysis
           </h1>
           
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <WorldMap 
+              onSelectCountry={(selectedCountry) => {
+                setCountry(selectedCountry);
+                handleAnalyze();
+              }} 
+            />
+          </div>
+
+          <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex gap-4">
               <input
                 type="text"
@@ -90,17 +105,17 @@ export default function Home() {
           </div>
 
           {loading && (
-            <div className="my-12">
+            <div className="text-center py-12">
               <LoadingSpinner />
-              <p className="text-center mt-4 text-gray-600">
+              <p className="mt-4 text-gray-600">
                 Analyzing {country}... This may take a few moments.
               </p>
             </div>
           )}
 
           {analysis && !loading && (
-            <>
-              <div className="flex border-b border-gray-200 mb-8">
+            <div className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="flex border-b border-gray-200">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
@@ -115,8 +130,10 @@ export default function Home() {
                   </button>
                 ))}
               </div>
-              {renderAnalysisContent()}
-            </>
+              <div className="p-6">
+                {renderAnalysisContent()}
+              </div>
+            </div>
           )}
         </div>
       </main>
