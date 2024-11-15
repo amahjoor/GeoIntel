@@ -1,5 +1,7 @@
 import requests
 from .threat_analysis import get_threat_analysis_prompt
+from fastapi import HTTPException
+import json
 
 home_country = "United States"
 
@@ -82,24 +84,35 @@ def format_poi_events_question(country, home_country):
         ]
     }}"""
 
-def ask_model(question):
-    url = "https://hackathon.niprgpt.mil/llama/v1/chat/completions"
-    headers = {
-        "Authorization": "Bearer Y2VudGNvbTpsZXRtZWlu",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "model": "neuralmagic/Meta-Llama-3.1-70B-Instruct-FP8",
-        "messages": [{"role": "user", "content": question}],
-        "temperature": 0.7
-    }
-
-    response = requests.post(url, headers=headers, json=data)
-    result = response.json()
-    
-    # Extract the model's response from the JSON
-    if "choices" in result and len(result["choices"]) > 0:
-        return result["choices"][0]["message"]["content"]
+def ask_model(question, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            response = requests.post(
+                "https://hackathon.niprgpt.mil/llama/v1/chat/completions",
+                headers={
+                    "Authorization": "Bearer Y2VudGNvbTpsZXRtZWlu",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "neuralmagic/Meta-Llama-3.1-70B-Instruct-FP8",
+                    "messages": [
+                        {"role": "system", "content": "You must return only valid JSON with no additional text or formatting."},
+                        {"role": "user", "content": question}
+                    ],
+                    "temperature": 0.7
+                },
+                timeout=30
+            )
+            
+            result = response.json()
+            if "choices" in result and len(result["choices"]) > 0:
+                return result["choices"][0]["message"]["content"]
+            
+        except (requests.RequestException, json.JSONDecodeError) as e:
+            if attempt == max_retries - 1:
+                raise HTTPException(status_code=500, detail=f"Failed to get valid response after {max_retries} attempts")
+            continue
+            
     return "Error: Unable to get response from model"
 
 # Example usage

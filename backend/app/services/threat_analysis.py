@@ -96,4 +96,4 @@ Return a single JSON object with no additional text or explanation. The JSON MUS
     }}
 }}
 
-Include at least 3 threat actors, 3 active threats, 3 historical incidents, and 2 vulnerabilities. Ensure all dates, names, and details are specific and accurate.""" 
+Include at least 3 threat actors, 3 active threats, 3 historical incidents, and 2 vulnerabilities. Ensure all dates, names, and details are specific and accurate. DO NOT INCLUDE ANY OTHER TEXT OR EXPLANATION.""" 
