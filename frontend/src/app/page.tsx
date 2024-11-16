@@ -62,7 +62,7 @@ export default function Home() {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-            Threat Intelligence Analysis
+            Geo-Intelligence Hub
           </h1>
           
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
